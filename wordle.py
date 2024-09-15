@@ -36,23 +36,34 @@ def play_wordle(instructions=True):
 
     attempts = 1
     word = get_word()
+    print(word, '\n')
+
     while True:
         guess = get_guess(attempts)
         attempts += 1
 
         #Evaluate the guess and print updated word display
-        output = ""
+        char_list = [w for w in word]
+        output = [None]*5
         correct_guesses = 0
+
         for i,w in enumerate(guess):
-            if w not in word:
-                output += colored(" "+w+" ", 'black', 'on_light_red')
-            elif guess[i] == word[i]:
+            if guess[i] == word[i]:
                 correct_guesses += 1
-                output += colored(" "+w+" ", 'black', 'on_green')
-            else:
-                output += colored(" "+w+" ", 'black', 'on_light_blue')
-            output += " "
-        print(output)  
+                output[i] = colored(" "+w+" ", 'black', 'on_green')
+                char_list.remove(guess[i])
+        
+        for i,w in enumerate(guess):
+            if output[i]==None:
+                if w not in char_list:
+                    output[i] = colored(" "+w+" ", 'black', 'on_light_red')
+                else:
+                    output[i] = colored(" "+w+" ", 'black', 'on_light_blue')
+                    char_list.remove(guess[i])
+        
+        for block in output:
+            print(block, end=" ")
+        print("\n")
 
         #Check if the word is guessed or the user has ran out of attempts.
         if correct_guesses == 5:
