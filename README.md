@@ -1,4 +1,4 @@
-# Wordle-Personal-Project
+# Wordle Personal Project
  This is a personal project using python, recreating a fun game called Wordle. 
 
 ## What is Wordle?
